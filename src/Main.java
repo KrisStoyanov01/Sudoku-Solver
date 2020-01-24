@@ -1,5 +1,10 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -7,18 +12,19 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static final String FILE_LOCATION = "I:\\Sudoku Solver\\src\\Puzzle.txt";
+    public static final String READ_FILE_LOCATION = "I:\\Sudoku Solver\\src\\Puzzle.txt";
+    public static final String WRITE_FILE_LOCATION = "I:\\Sudoku Solver\\src\\Solution.txt";
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws IOException {
 	    List<Square> grid = new ArrayList<>();
 	    fillGrid(grid);
         solveGrid(grid);
-
-
+        writeToFile(grid);
+        System.out.println("Solved");
     }
 
     public static void fillGrid(List<Square> grid) throws FileNotFoundException {
-        File file = new File(FILE_LOCATION);
+        File file = new File(READ_FILE_LOCATION);
         Scanner sc = new Scanner(file);
 
         List<String> rows = new ArrayList<>();
@@ -104,5 +110,17 @@ public class Main {
             }
         }
         return true;
+    }
+
+    public static void writeToFile(List<Square> grid) throws IOException {
+        List<String> lines = new ArrayList<>();
+        for(int i = 0; i < 9; i++){
+            for (int j = 0; j < 9; j++){
+                lines.add(grid.get(i * 9 + j).getValue() + " ");
+            }
+        }
+
+        Path file = Paths.get(WRITE_FILE_LOCATION);
+        Files.write(file, lines, StandardCharsets.UTF_8);
     }
 }
