@@ -12,15 +12,23 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static final String READ_FILE_LOCATION = "I:\\Sudoku Solver\\src\\Puzzle.txt";
+    public static final String READ_FILE_LOCATION = "I:\\Sudoku Solver\\src\\Puzzle4.txt";
     public static final String WRITE_FILE_LOCATION = "I:\\Sudoku Solver\\src\\Solution.txt";
 
     public static void main(String[] args) throws IOException {
         List<Square> grid = new ArrayList<>();
+
+        Long startTime = System.nanoTime();
+
         fillGrid(grid);
         solveGrid(grid);
         writeToFile(grid);
+
+        Long endTime = System.nanoTime();
+        Long timeElapsed = endTime - startTime;
+
         System.out.println("Solved");
+        System.out.println("Execution time in seconds: " + timeElapsed/1000000000);
     }
 
     public static void fillGrid(List<Square> grid) throws FileNotFoundException {
